@@ -7,12 +7,15 @@
 (def conn (db/open-connection))
 (pprint conn)
 
+; (db/delete-db)
+
 (db/create-schema conn)
 
-(let [computer (model/new-product "computer" "/new-computer" 2500.10M)]
-  (d/transact conn [computer]))
+(let [computer (model/new-product "computer" "/new-computer" 2500.10M)
+      result @(d/transact conn [computer])
+      id (first (vals (:tempids result)))]
+  (pprint @(d/transact conn [[:db/add id :product/price 1500.0M]])))
 
-(def db (d/db conn))
+(db/all-products-ids (d/db conn))
 
-(d/q '[:find ?entity
-       :where [?entity :product/name]] db)
+(db/all-products-by-attribute (d/db conn) :product/slug "/new-computer")

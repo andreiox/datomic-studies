@@ -24,3 +24,13 @@
 (defn create-schema
   [conn]
   (d/transact conn schema))
+
+(defn all-products-ids
+  [db]
+  (d/q '[:find ?entity
+         :where [?entity :product/name]] db))
+
+(defn all-products-by-attribute [db attribute value]
+  (d/q '[:find ?entidade
+         :in $ ?attribute ?value
+         :where [?entidade ?attribute ?value]] db attribute value))

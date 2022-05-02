@@ -1,6 +1,9 @@
-(ns alura-intro.core)
+(ns alura-intro.core
+  (:use clojure.pprint)
+  (:require [datomic.api :as d]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(def db-uri "datomic:dev://localhost:4334/hello")
+
+(pprint (d/create-database db-uri))
+(def conn (d/connect db-uri))
+(pprint (d/delete-database db-uri))

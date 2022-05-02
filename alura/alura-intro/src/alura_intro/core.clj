@@ -1,9 +1,18 @@
 (ns alura-intro.core
   (:use clojure.pprint)
-  (:require [datomic.api :as d]))
+  (:require [alura-intro.db :as db]
+            [alura-intro.model :as model]
+            [datomic.api :as d]))
 
-(def db-uri "datomic:dev://localhost:4334/hello")
+(def conn (db/open-connection))
+(pprint conn)
 
-(pprint (d/create-database db-uri))
-(def conn (d/connect db-uri))
-(pprint (d/delete-database db-uri))
+(db/create-schema conn)
+
+(let [computer (model/new-product "computer" "/new-computer" 2500.10M)]
+  (d/transact conn [computer]))
+
+(def db (d/db conn))
+
+(d/q '[:find ?entity
+       :where [?entity :product/name]] db)

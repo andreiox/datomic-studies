@@ -17,14 +17,12 @@
   (pprint result))
 
 (def products (db/all-products (d/db conn)))
-
 (pprint products)
 
-(def product-id (-> products
-                    first
-                    first
-                    :db/id))
+(def db-id (-> products ffirst :db/id))
+(pprint (db/one-product-db-id (d/db conn) db-id))
 
-(pprint (db/one-product (d/db conn) product-id))
+(def product-id (-> products second first :product/id))
+(pprint (db/one-product-by-id (d/db conn) product-id))
 
 (db/delete-db)

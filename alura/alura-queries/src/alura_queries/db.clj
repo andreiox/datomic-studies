@@ -11,7 +11,11 @@
 (defn delete-db []
   (d/delete-database db-uri))
 
-(def schema [{:db/ident :product/name
+(def schema [{:db/ident :product/id
+              :db/valueType :db.type/uuid
+              :db/cardinality :db.cardinality/one
+              :db/unique :db.unique/identity}
+             {:db/ident :product/name
               :db/valueType :db.type/string
               :db/cardinality :db.cardinality/one}
              {:db/ident :product/slug
@@ -25,7 +29,7 @@
   [conn]
   (d/transact conn schema))
 
-(defn one-product
+(defn one-product-db-id
   [db id]
   (d/pull db '[*] id))
 
@@ -33,3 +37,7 @@
   [db]
   (d/q '[:find (pull ?e [*])
          :where [?e :product/name]] db))
+
+(defn one-product-by-id
+  [db id]
+  (d/pull db '[*] [:product/id id]))

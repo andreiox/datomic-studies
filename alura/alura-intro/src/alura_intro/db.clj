@@ -34,3 +34,10 @@
   (d/q '[:find ?entidade
          :in $ ?attribute ?value
          :where [?entidade ?attribute ?value]] db attribute value))
+
+(defn all-products-name-and-price
+  [db]
+  (d/q '[:find ?name ?price
+         :where
+         [?e :product/name ?name]
+         [?e :product/price ?price]] db))

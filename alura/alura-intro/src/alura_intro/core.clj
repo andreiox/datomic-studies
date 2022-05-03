@@ -19,3 +19,5 @@
 (db/all-products-ids (d/db conn))
 
 (db/all-products-by-attribute (d/db conn) :product/slug "/new-computer")
+
+(pprint (db/all-products-name-and-price (d/db conn)))

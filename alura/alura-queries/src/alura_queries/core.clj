@@ -36,4 +36,8 @@
 (pprint @(d/transact conn [[:db/add [:product/id product-id] :product/category [:category/id (:category/id pc)]]]))
 (pprint (db/one-product-by-id (d/db conn) product-id))
 
+(pprint (db/products-names-and-categories (d/db conn)))
+
+(pprint (db/products-by-category-name (d/db conn) "pc"))
+
 (db/delete-db)

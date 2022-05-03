@@ -57,3 +57,21 @@
   [db]
   (d/q '[:find (pull ?e [*])
          :where [?e :category/id]] db))
+
+(defn products-names-and-categories
+  [db]
+  (d/q '[:find ?name ?category-name
+         :where
+         [?entity :product/name ?name]
+         [?entity :product/category ?category]
+         [?category :category/name ?category-name]]
+       db))
+
+(defn products-by-category-name
+  [db category-name]
+  (d/q '[:find (pull ?entity [*])
+         :in $ ?category-name
+         :where
+         [?category :category/name ?category-name]
+         [?entity :product/category ?category]]
+       db category-name))

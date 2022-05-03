@@ -69,7 +69,7 @@
 
 (defn products-by-category-name
   [db category-name]
-  (d/q '[:find (pull ?entity [*])
+  (d/q '[:find (pull ?entity [:product/id :product/name {:product/category [:category/name]}])
          :in $ ?category-name
          :where
          [?category :category/name ?category-name]

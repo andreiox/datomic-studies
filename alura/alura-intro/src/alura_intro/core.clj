@@ -21,3 +21,5 @@
 (db/all-products-by-attribute (d/db conn) :product/slug "/new-computer")
 
 (pprint (db/all-products-name-and-price (d/db conn)))
+
+(pprint (db/all-products (d/db conn)))

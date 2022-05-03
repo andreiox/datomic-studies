@@ -38,6 +38,17 @@
 (defn all-products-name-and-price
   [db]
   (d/q '[:find ?name ?price
+         :keys name price
          :where
          [?e :product/name ?name]
          [?e :product/price ?price]] db))
+
+(defn all-products-explicit
+  [db]
+  (d/q '[:find (pull ?entity [:product/name :product/slug :product/price])
+         :where [?entity :product/name]] db))
+
+(defn all-products
+  [db]
+  (d/q '[:find (pull ?entity [*])
+         :where [?entity :product/name]] db))

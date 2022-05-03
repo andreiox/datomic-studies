@@ -40,4 +40,6 @@
 
 (pprint (db/products-by-category-name (d/db conn) "pc"))
 
+(pprint (db/products-by-category-name-backwards-nav (d/db conn) "pc"))
+
 (db/delete-db)

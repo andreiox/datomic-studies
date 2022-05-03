@@ -75,3 +75,11 @@
          [?category :category/name ?category-name]
          [?entity :product/category ?category]]
        db category-name))
+
+(defn products-by-category-name-backwards-nav
+  [db category-name]
+  (d/q '[:find (pull ?category [* {:product/_category [*]}])
+         :in $ ?category-name
+         :where
+         [?category :category/name ?category-name]]
+       db category-name))

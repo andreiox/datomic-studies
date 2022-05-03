@@ -5,3 +5,7 @@
    :product/name name
    :product/slug slug
    :product/price price})
+
+(defn new-category [name]
+  {:category/id (java.util.UUID/randomUUID)
+   :category/name name})

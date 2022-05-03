@@ -9,6 +9,14 @@
 
 (db/create-schema conn)
 
+(def cellphone (model/new-category "cellphone"))
+(def pc (model/new-category "pc"))
+
+(pprint @(d/transact conn [cellphone pc]))
+
+(def categories (db/all-categories (d/db conn)))
+(pprint categories)
+
 (let [computer (model/new-product "computer" "/new-computer" 2500.10M)
       old-computer (model/new-product "old computer" "/old-computer" 200.10M)
       cellphone (model/new-product "samsung cellphone" "/samsung-cellphone" 200.10M)
@@ -23,6 +31,9 @@
 (pprint (db/one-product-db-id (d/db conn) db-id))
 
 (def product-id (-> products second first :product/id))
+(pprint (db/one-product-by-id (d/db conn) product-id))
+
+(pprint @(d/transact conn [[:db/add [:product/id product-id] :product/category [:category/id (:category/id pc)]]]))
 (pprint (db/one-product-by-id (d/db conn) product-id))
 
 (db/delete-db)

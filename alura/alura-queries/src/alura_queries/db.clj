@@ -91,3 +91,12 @@
          :with ?entity
          :where [?entity :product/price ?price]]
        db))
+
+(defn highest-price-nested
+  [db]
+  (d/q '[:find (pull ?entity [*])
+         :where
+         [(q '[:find (max ?price)
+               :where [_ :product/price ?price]] $) [[?price]]]
+         [?entity :product/price ?price]]
+       db))

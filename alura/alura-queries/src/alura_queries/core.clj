@@ -44,4 +44,6 @@
 
 (pprint (db/summary-products (d/db conn)))
 
+(pprint (db/highest-price-nested (d/db conn)))
+
 (db/delete-db)

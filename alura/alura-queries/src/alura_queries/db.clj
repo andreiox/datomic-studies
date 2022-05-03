@@ -83,3 +83,11 @@
          :where
          [?category :category/name ?category-name]]
        db category-name))
+
+(defn summary-products
+  [db]
+  (d/q '[:find (min ?price) (max ?price) (count ?price)
+         :keys min max count
+         :with ?entity
+         :where [?entity :product/price ?price]]
+       db))

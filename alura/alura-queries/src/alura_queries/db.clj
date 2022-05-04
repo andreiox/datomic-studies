@@ -100,3 +100,12 @@
                :where [_ :product/price ?price]] $) [[?price]]]
          [?entity :product/price ?price]]
        db))
+
+(defn products-by-categories
+  [db categories]
+  (d/q '[:find (pull ?entity [*])
+         :in $ [?category-name ...]
+         :where
+         [?category :category/name ?category-name]
+         [?entity :product/category ?category]]
+       db categories))

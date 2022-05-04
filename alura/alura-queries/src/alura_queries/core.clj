@@ -46,4 +46,7 @@
 
 (pprint (db/highest-price-nested (d/db conn)))
 
+(pprint (db/products-by-category-name (d/db conn) "pc"))
+(pprint (db/products-by-category-name (d/db conn) "cellphone"))
+
 (db/delete-db)
